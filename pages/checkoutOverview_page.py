@@ -1,3 +1,4 @@
+# Checkout Overview Page Object Model (POM) class
 from playwright.sync_api import Page, expect
 
 class CheckoutOverviewPage:
