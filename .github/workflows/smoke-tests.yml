@@ -32,10 +32,7 @@ jobs:
         
         - name: Run Smoke Tests with HTML Report
           run: |
-            behave  --tags=@smoke\
-            -f behave_html_formatter:HTMLFormatter \
-            -o reports/smoke_test_report.html \
-            -f pretty 
+            behave  --tags=@smoke -f behave_html_formatter:HTMLFormatter -o reports/smoke_test_report.html -f pretty 
 
         - name: Upload HTML Test Report
           if: always() # Upload the report whether the tests pass or fail
