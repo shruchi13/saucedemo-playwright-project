@@ -13,9 +13,9 @@ def before_all(context):
     # or check if -D headless =true was passed via command line 
     is_ci = os.getenv("CI", "false").lower() == "true"
     is_headless = context.config.userdata.getbool("headless", is_ci)
-    
+
     context.browser = context.playwright.chromium.launch(
-        headless=False, slow_mo=500
+        headless=is_ci # True for CI, False for local development
     )
 
 # Function to start playwright and launch a browser 
