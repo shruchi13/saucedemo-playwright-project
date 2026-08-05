@@ -1,0 +1,17 @@
+#Python/Virtualenv 
+venv/
+.venv/
+__pycache__/
+#Pytest
+.pytest_cache/  
+*.pyc
+
+# Behave/Reports
+reports/
+*.log
+
+# Playwright
+playwright-report/
+test-results/
+blob-report/
+
