@@ -1,8 +1,10 @@
+@regression
 Feature: SauceDemo Checkout Process
 
   Background:
     Given I am logged in as a "standard_user"
-
+    
+  @smoke
   Scenario: Fill in checkout information
     When I add "Sauce Labs Backpack" to the cart
     And I go to shopping cart 
@@ -11,7 +13,7 @@ Feature: SauceDemo Checkout Process
     When I click continue button
     Then I should see the checkout overview page
     
-
+  @smoke
   Scenario: Cancel checkout process
     When I add "Sauce Labs Backpack" to the cart
     And I go to shopping cart

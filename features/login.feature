@@ -1,3 +1,4 @@
+@smoke
 Feature: SauceDemo Authentication
 
  Scenario: Successful Login with Standard User

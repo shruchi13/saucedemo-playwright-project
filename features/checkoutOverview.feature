@@ -1,3 +1,4 @@
+@regression
 Feature: SauceDemo Checkout Process
 
   Background:
@@ -30,7 +31,7 @@ Feature: SauceDemo Checkout Process
     When I click Cancel button on the checkout overview page
     Then I should be redirected back to the inventory page from the checkout overview page
 
-
+  @smoke
   Scenario: Finish checkout process
     When I add "Sauce Labs Backpack" to the cart
     And I go to shopping cart
