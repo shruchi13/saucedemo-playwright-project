@@ -10,9 +10,14 @@ def step_impl(context, username):
     
     # Fallback: If redirected back to login page (e.g. state expired/missing), log in via UI
     if "inventory.html" not in context.page.url:
+        context.login_page = LoginPage(context.page)
+        context.inventory_page = InventoryPage(context.page)
+        # Navigate to Login page
         context.login_page.navigate()
+    
         context.login_page.login(username, "secret_sauce")
-        context.page.wait_for_url("**/inventory.html")
+        # Wait explicitly for inventory page load
+        context.inventory_page.is_loaded()
 
 @then('I should see the page title "{expected_title}"')
 def step_impl(context, expected_title):

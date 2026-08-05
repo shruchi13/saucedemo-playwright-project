@@ -9,6 +9,11 @@ class InventoryPage:
         self.shopping_cart_badge = page.locator(".shopping_cart_badge")
         self.shopping_cart_link = page.locator(".shopping_cart_link")
 
+    def is_loaded(self):
+        # Wait until page URL and title are ready
+        self.page.wait_for_url("**/inventory.html")
+        self.title.wait_for(state="visible")
+
     def get_title_text(self) -> str:
         return self.title.inner_text()
     
@@ -43,3 +48,8 @@ class InventoryPage:
     
     def get_all_product_names(self) -> list[str]:
         return self.page.locator(".inventory_item_name").all_text_contents()
+    
+    def get_cart_count(self) -> str:
+        if self.shopping_cart_badge.is_visible():
+            return self.shopping_cart_badge.text_content().strip()
+        return "0"
