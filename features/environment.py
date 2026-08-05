@@ -9,6 +9,11 @@ from pages.checkoutOverview_page import CheckoutOverviewPage
 def before_all(context):
     context.playwright = sync_playwright().start()
     # Launch a browser once for the entire test suite; we will create a new context for each scenario
+    # Automatically use headless = True for CI environments, and headless = False for local development
+    # or check if -D headless =true was passed via command line 
+    is_ci = os.getenv("CI", "false").lower() == "true"
+    is_headless = context.config.userdata.getbool("headless", is_ci)
+    
     context.browser = context.playwright.chromium.launch(
         headless=False, slow_mo=500
     )
