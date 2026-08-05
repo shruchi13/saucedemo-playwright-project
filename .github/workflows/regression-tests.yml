@@ -1,0 +1,45 @@
+name: Daily Regression Tests
+
+on:
+  schedule:
+    # 2:15 PM CST corresponds to 20:15 UTC (15 20 * * *)
+    # (If running during Daylight Saving Time / CDT, adjust to '15 19 * * *')
+    - cron: '15 20 * * *'
+  # Allows manual execution anytime from the GitHub Actions UI
+  workflow_dispatch:
+
+jobs:
+  regression-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Install Playwright browsers & OS dependencies
+        run: |
+          playwright install --with-deps chromium
+
+      - name: Create Reports Directory
+        run: mkdir -p reports
+
+      - name: Run Regression Suite
+        run: |
+          behave --tags=@regression -f behave_html_formatter:HTMLFormatter -o reports/regression_test_report.html -f pretty
+
+      - name: Upload HTML Test Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-test-html-report
+          path: reports/regression_test_report.html
