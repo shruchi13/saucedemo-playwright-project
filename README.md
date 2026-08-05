@@ -1,4 +1,3 @@
-# saucedemo-playwright-project
 # SauceDemo E-Commerce Test Automation Framework
 
 ![Playwright](https://img.shields.io/badge/Playwright-1.40+-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)
