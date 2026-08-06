@@ -11,7 +11,7 @@ Scenario: See Cart Page
     And I should see "Sauce Labs Backpack" in the cart
     And I should see item price in the cart 
     And I should see item quantity in the cart 
-@smoke
+
 Scenario: Proceed to checkout page
     When I go to shopping cart
     And I click checkout button

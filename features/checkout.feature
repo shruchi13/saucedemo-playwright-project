@@ -4,7 +4,7 @@ Feature: SauceDemo Checkout Process
   Background:
     Given I am logged in as a "standard_user"
     
-  @smoke
+ 
   Scenario: Fill in checkout information
     When I add "Sauce Labs Backpack" to the cart
     And I go to shopping cart 

@@ -8,12 +8,12 @@ Feature: SauceDemo Inventory & Cart Management
     Then I should see the page title "Products"
     And there should be 6 products displayed
 
-  @smoke
+  
   Scenario: Add Product to Cart
     When I add "Sauce Labs Backpack" to the cart
     Then the shopping cart badge count should be "1"
-    
-  @smoke
+
+  
   Scenario: Remove Product from Cart
     When I add "Sauce Labs Backpack" to the cart
     And I remove item "Sauce Labs Backpack" from the inventory page
