@@ -5,6 +5,10 @@ from playwright.sync_api import expect
 
 @given('I am logged in as a "{username}"')
 def step_impl(context, username):
+    # Initialize page object as the start 
+    context.login_page = LoginPage(context.page)
+    context.inventory_page = InventoryPage(context.page)
+
     # Navigate directly to inventory; state.json handles authentication state automatically
     context.page.goto("https://www.saucedemo.com/inventory.html")
     
@@ -16,8 +20,11 @@ def step_impl(context, username):
         context.login_page.navigate()
     
         context.login_page.login(username, "secret_sauce")
-        # Wait explicitly for inventory page load
-        context.inventory_page.is_loaded()
+    
+
+    # Ensure inventory page is completely loaded before downstream steps run 
+    context.inventory_page.is_loaded()
+
 
 @then('I should see the page title "{expected_title}"')
 def step_impl(context, expected_title):

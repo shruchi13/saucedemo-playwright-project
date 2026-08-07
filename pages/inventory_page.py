@@ -11,8 +11,9 @@ class InventoryPage:
 
     def is_loaded(self):
         # Wait until page URL and title are ready
-        self.page.wait_for_url("**/inventory.html")
-        self.title.wait_for(state="visible")
+        self.page.wait_for_url("**/inventory.html", timeout =10000)
+        self.title.wait_for(state="visible", timeout =10000)
+        self.inventory_items.first.wait_for(state="visible", timeout =10000)
 
     def get_title_text(self) -> str:
         return self.title.inner_text()
@@ -21,12 +22,26 @@ class InventoryPage:
         return self.inventory_items.count()
     
     def add_item_to_cart(self, item_name: str):
-        item_container = self.page.locator(".inventory_item").filter(has_text=item_name)
-        item_container.get_by_role("button", name="Add to cart").click()
+        # Ensure page element are ready 
+        self.is_loaded()
+        # Convert item name to SauceDemo data-test attribute format
+        item_slug = item_name.lower().replace(" ", "-")
+        add_btn = self.page.locator(f"[data-test='add-to-cart-{item_slug}']")
+        # Resilient fallback if data-test selector doesn't match
+        if not add_btn.is_visible(timeout=2000):
+            item_container = self.inventory_items.filter(has_text=item_name)
+            add_btn = item_container.locator("button", has_text="Add to cart")
+        add_btn.click()
 
     def remove_item_from_cart(self, item_name: str):
-        item_container = self.page.locator(".inventory_item").filter(has_text=item_name)
-        item_container.get_by_role("button", name="Remove").click()
+        self.is_loaded()
+        item_slug = item_name.lower().replace(" ", "-")
+        remove_btn = self.page.locator(f"[data-test='remove-{item_slug}']")
+        if not remove_btn.is_visible(timeout=2000):
+            item_container =self.inventory_items.filter(has_text=item_name)
+            remove_btn = item_container.locator("button", has_text="Remove")
+
+        remove_btn.click()
 
 
     def sort_products_by(self, option_value: str):
