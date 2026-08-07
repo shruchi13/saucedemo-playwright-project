@@ -10,18 +10,17 @@ def step_impl(context, username):
     context.inventory_page = InventoryPage(context.page)
 
     # Navigate directly to inventory; state.json handles authentication state automatically
-    context.page.goto("https://www.saucedemo.com/inventory.html")
+    # context.page.goto("https://www.saucedemo.com/inventory.html")
     
     # Fallback: If redirected back to login page (e.g. state expired/missing), log in via UI
-    if "inventory.html" not in context.page.url:
-        context.login_page = LoginPage(context.page)
-        context.inventory_page = InventoryPage(context.page)
+    #if "inventory.html" not in context.page.url:
+        #context.login_page = LoginPage(context.page)
+        #context.inventory_page = InventoryPage(context.page)
         # Navigate to Login page
-        context.login_page.navigate()
+       # context.login_page.navigate()
+    # Perform UI login directly to guarantee valid session state
+    context.login_page.login(username, "secret_sauce")
     
-        context.login_page.login(username, "secret_sauce")
-    
-
     # Ensure inventory page is completely loaded before downstream steps run 
     context.inventory_page.is_loaded()
 

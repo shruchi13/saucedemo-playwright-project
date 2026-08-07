@@ -25,8 +25,8 @@ class LoginPage:
         self.login_btn.click()
 
     def login(self, username: str, password: str):
-        self.username_input.fill(username)
-        self.password_input.fill(password)
+        self.navigate()
+        self.enter_credentials(username,password)
         self.login_btn.click()
 
     # Check if login succeeded by checking if error is not displayed 
